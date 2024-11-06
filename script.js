@@ -109,16 +109,16 @@ function handleSetAlarm(){
     if(time1){
          [hour,minute] = time1.split(":")
          
-         set.add(`${hour}-${minute}`)
+         set.add(`${hour.length>1 ? hour:"0" + hour}-${minute.length>1 ? minute : "0" + minute}`)
          time12.value =""
-
         }
         
     }
     function checkAlarm(){
         let currTime = new Date()
-        let min =currTime.getMinutes()
-        let hour = currTime.getHours() 
+        let min =String(currTime.getMinutes())
+        let hour =String( currTime.getHours()) 
+        console.log(set,`${hour.length>1 ?hour:"0" + hour}-${min.length>1 ? min :"0" + min}`,min.length)
         if(set.has(`${hour.length>1 ?hour:"0" + hour}-${min.length>1 ?min:"0" + min}`)){
             let tone = document.getElementById("tone")
           tone.play()
