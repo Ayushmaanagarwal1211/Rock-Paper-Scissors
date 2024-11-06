@@ -59,3 +59,66 @@ button{
 .user .img  .active{
     border: black solid 2px;
 }
+.time{
+    display: flex;
+    font-size: larger;
+    justify-content: center;
+}
+.inner-time{
+    font-size: larger;
+}
+
+
+
+.quiz-container {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 30px;
+    text-align: center;
+}
+
+#question-container {
+    margin-bottom: 20px;
+}
+
+.answer-btn {
+    background-color: #4CAF50; 
+     color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.answer-btn:hover {
+    background-color: #45a049;
+}
+.answer-btn:disabled{
+    
+    cursor: not-allowed;
+}
+.active-btn{
+    background-color: green !important;
+}
+#next-btn {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#next-btn:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+#score-container {
+    text-align: center;
+}
