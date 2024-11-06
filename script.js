@@ -160,7 +160,7 @@ function shuffle(...options){
 }
 window.onload =async  function (){
 
-    let data =await fetch("https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple")
+    let data =await fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")
     data=await data.json()
     data=data.results
     // let data  = [
