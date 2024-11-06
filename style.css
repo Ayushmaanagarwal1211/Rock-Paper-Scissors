@@ -1,19 +1,34 @@
 .user{
-    display: flex;
-    gap: 70px;
-    justify-content: center;
-    flex-direction: column;
-    width: 41vw;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    justify-content: center;
     align-items: center;
+    width: 45vw;
 }
-.computer{
+@media only screen and (max-width:700px){
+    .container{
+        flex-direction: column;
+    }
+}
+.header{
+    display: flex;
+    align-items: end;
+    height: 20vh;
+    width: 100%;
+    justify-content: center;
+}
+.heading{
+    align-self: end;
+}
+/* .computer{
     display: flex;
     justify-content: center;
   
     height: 100vh;
     width: 41vw;
-}
+} */
 button{
     height: 50px;
     width: 200px;
@@ -26,16 +41,20 @@ button{
     height: 100vh;
     width: 100vw;
     display: flex;
+    gap: 50px;
 }
 .computer img{
     height: 300px;
-    margin-top: 70px;
+ 
+}
+.computer{
+    min-height: 40vh;
 }
 .main{
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    
 }
 .user .img  .active{
     border: black solid 2px;
