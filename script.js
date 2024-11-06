@@ -11,14 +11,25 @@ async function handleClick(){
         showAnimation()
         counter++
     }
-    if(choose()){
+    let a  = choose()
+    if(a==true){
         score++
+    }else if(a=="t"){
+        compScore++
     }
-    console.log(option,'asssssssssssssss')
     let container = document.getElementById("score")
-    container.innerHTML = `<h1>score : ${score}</h1> `
+    if(score>2 || compScore>2){
+        container.innerHTML =  `<h1>${score>2?"You Win":"Computer Win"}</h1>`
+    await delay(3000) 
+    score = 0
+    compScore = 0
+container.innerHTML = `<h1>Your score : ${score}</h1> <h1>Computer Score : ${compScore}</h1>`
+        return
+    }
+    container.innerHTML = `<h1>Your score : ${score}</h1> <h1>Computer Score : ${compScore}</h1>`
 }
 let score  = 0
+let compScore = 0
 function choose(){
 
     let rand =Math.floor( Math.random()*3)
@@ -32,14 +43,20 @@ function choose(){
     if(option == 0){
         if(rand==1){
             return true
+        }else if(rand!==0){
+            return 't'
         }
     }else if(option == 1){
         if(rand==2){
             return true
+        }else if(rand!==1){
+            return 't'
         }
     }else if(option==2) {
         if(rand==0){
             return true
+        }else if(rand!==2){
+            return 't'
         }
     }
     return false
@@ -75,6 +92,280 @@ Array.from(imgs).forEach((ee)=>{
         }
     })
 })
-function setOption(e){
-   
+let hour = null
+let minute=  null
+let set = new Set()
+function stopTime(){
+    let tone = document.getElementById("tone")
+        tone.pause()
+        document.getElementById("stop-time").style.display = "none"
 }
+let time1 = document.getElementById("input-time")
+time1.value =""
+function handleSetAlarm(){
+    
+    let time12 = document.getElementById("input-time")
+   let  time1 = time12.value
+    if(time1){
+         [hour,minute] = time1.split(":")
+         
+         set.add(`${hour}-${minute}`)
+         time12.value =""
+
+        }
+        
+    }
+    function checkAlarm(){
+        let currTime = new Date()
+        let min =currTime.getMinutes()
+        let hour = currTime.getHours() 
+        if(set.has(`${hour.length>1 ?hour:"0" + hour}-${min.length>1 ?min:"0" + min}`)){
+            let tone = document.getElementById("tone")
+          tone.play()
+            set.delete(`${hour.length>1 ?hour:"0" + hour}-${min.length>1 ?min:"0" + min}`)
+            tone.loop = true
+            document.getElementById("stop-time").style.display = "block"
+         
+    }
+}
+document.getElementById("stop-time").style.display = "none"
+setInterval(()=>{
+    let clock = document.getElementById("time")
+    clock.innerHTML = ""
+    let currTime = new Date()
+    let hourNode = document.createElement("p")
+    hourNode.className = "inner-time"
+    hourNode.innerHTML = `${currTime.getHours()} : ${currTime.getMinutes()} : ${currTime.getSeconds()}`
+    clock.appendChild(hourNode)
+    checkAlarm()
+},1000)
+
+let quizData;
+function shuffle(...options){
+    let arr = []
+    let set = new Set()
+    let i=0
+    console.log(options)
+    while(i<4){
+        let rnd = Math.floor(Math.random()*4)
+        console.log(rnd)
+        if(!set.has(rnd)){
+            arr.push(options[rnd])
+            set.add(rnd)
+            i++
+        }
+        // break
+    }
+    return arr
+}
+window.onload =async  function (){
+
+    let data =await fetch("https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple")
+    data=await data.json()
+    data=data.results
+    // let data  = [
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "When was the Playstation 3 released?",
+    //     "correct_answer": "November 11, 2006",
+    //     "incorrect_answers": [
+    //     "January 8, 2007",
+    //     "December 25, 2007",
+    //     "July 16, 2006"
+    //     ]
+    //     },
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "Which American-owned brewery led the country in sales by volume in 2015?",
+    //     "correct_answer": "D. G. Yuengling and Son, Inc",
+    //     "incorrect_answers": [
+    //     "Anheuser Busch",
+    //     "Boston Beer Company",
+    //     "Miller Coors"
+    //     ]
+    //     },
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "According to the nursery rhyme, what fruit did Little Jack Horner pull out of his Christmas pie?",
+    //     "correct_answer": "Plum",
+    //     "incorrect_answers": [
+    //     "Apple",
+    //     "Peach",
+    //     "Pear"
+    //     ]
+    //     },
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "Earth is located in which galaxy?",
+    //     "correct_answer": "The Milky Way Galaxy",
+    //     "incorrect_answers": [
+    //     "The Mars Galaxy",
+    //     "The Galaxy Note",
+    //     "The Black Hole"
+    //     ]
+    //     },
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "The New York Times slogan is, &ldquo;All the News That&rsquo;s Fit to&hellip;&rdquo;",
+    //     "correct_answer": "Print",
+    //     "incorrect_answers": [
+    //     "Digest",
+    //     "Look",
+    //     "Read"
+    //     ]
+    //     },
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "Red Vines is a brand of what type of candy?",
+    //     "correct_answer": "Licorice",
+    //     "incorrect_answers": [
+    //     "Lollipop",
+    //     "Chocolate",
+    //     "Bubblegum"
+    //     ]
+    //     },
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "What kind of aircraft was developed by Igor Sikorsky in the United States in 1942?",
+    //     "correct_answer": "Helicopter",
+    //     "incorrect_answers": [
+    //     "Stealth Blimp",
+    //     "Jet",
+    //     "Space Capsule"
+    //     ]
+    //     },
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "Five dollars is worth how many nickles?",
+    //     "correct_answer": "100",
+    //     "incorrect_answers": [
+    //     "50",
+    //     "25",
+    //     "69"
+    //     ]
+    //     },
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "What is the closest planet to our solar system&#039;s sun?",
+    //     "correct_answer": "Mercury",
+    //     "incorrect_answers": [
+    //     "Mars",
+    //     "Jupiter",
+    //     "Earth"
+    //     ]
+    //     },
+    //     {
+    //     "type": "multiple",
+    //     "difficulty": "easy",
+    //     "category": "General Knowledge",
+    //     "question": "The &ldquo;fairy&rdquo; type made it&rsquo;s debut in which generation of the Pokemon core series games?",
+    //     "correct_answer": "6th",
+    //     "incorrect_answers": [
+    //     "2nd",
+    //     "7th",
+    //     "4th"
+    //     ]
+    //     }
+    //     ]
+    console.log(data)
+    // shuffle(data[0].correct_answer , ...data[0].incorrect_answers)
+    for(let i of data){
+        i.options = shuffle(i.correct_answer , ...i.incorrect_answers)
+    }
+    quizData = data
+    loadQuestion()
+}
+async function update(){
+    
+    let data =await fetch("https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple")
+    data=await data.json()
+    data=data.results
+ 
+    console.log(data)
+    for(let i of data){
+        i.options = shuffle(i.correct_answer , ...i.incorrect_answers)
+    }
+    quizData = data
+}
+let currentQuestionIndex = 0;
+let score1 = 0;
+
+function loadQuestion() {
+    const currentQuestion = quizData[currentQuestionIndex];
+    
+    document.getElementById('question-text').innerText = currentQuestion.question;
+    
+    const answerButtons = document.querySelectorAll('.answer-btn');
+    answerButtons.forEach((btn, index) => {
+        btn.innerHTML = currentQuestion.options[index];
+        btn.classList.remove("active-btn")
+    });
+
+    document.getElementById('next-btn').disabled = true;
+}
+let ans = null
+function selectAnswer(selectedIndex) {
+    ans = selectedIndex
+ 
+
+    const answerButtons = document.querySelectorAll('.answer-btn');
+    console.log(answerButtons)
+    answerButtons.forEach((btn,index) => {
+        btn.classList.remove("active-btn")
+        if(index==selectedIndex){
+            btn.classList.add("active-btn")
+        }
+        console.log(btn.disabled)
+    });
+    document.getElementById('next-btn').disabled = false;
+}
+
+function nextQuestion() {
+    const currentQuestion = quizData[currentQuestionIndex];
+    console.log(currentQuestion)
+    if (ans === currentQuestion.options.indexOf(currentQuestion.correct_answer)) {
+        score1++;
+        ans = null
+    }
+    currentQuestionIndex++;
+    if (currentQuestionIndex < quizData.length) {
+        loadQuestion();
+    } else {
+        showScore();
+    }
+}
+
+function showScore() {
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('score-container').style.display = 'block';
+    document.getElementById('final-score').innerText = score1 + " / " + quizData.length;
+
+}
+
+function restartQuiz() {
+    score1 = 0;
+    currentQuestionIndex = 0;
+    document.getElementById('quiz').style.display = 'block';
+    document.getElementById('score-container').style.display = 'none';
+    update()
+    loadQuestion();
+}
+
