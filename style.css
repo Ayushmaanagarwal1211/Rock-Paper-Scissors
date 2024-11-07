@@ -7,11 +7,57 @@
     align-items: center;
     width: 45vw;
 }
+.quiz-container{
+    margin: auto;
+}
 @media only screen and (max-width:700px){
     .container{
         flex-direction: column;
+        gap: 10px !important;
+        height: auto !important;
+    }
+    button{
+        margin-top: 30px;
+    }
+    .img{
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    .user{
+        width: 100vw !important;
+        height: auto ;
+        gap: 10px !important;
+       
+    }
+    #quiz{
+        width: 240px !important;
+        margin: auto !important;
+    }
+    .quiz-container{
+        padding: 30px 0px 30px 0px !important;
+    }
+    .img img{
+        height: 120px !important;
     }
 }
+@media only screen and (max-width:1200px){
+    .text{
+        font-size: small !important;
+        width: auto !important;
+    }
+    .computer img{
+        height: 200px !important;
+    }
+    .img{
+        display: flex;
+    }
+    .img img{
+        height: 200px;
+    }
+}
+
 .header{
     display: flex;
     align-items: end;
@@ -122,3 +168,90 @@ button{
 #score-container {
     text-align: center;
 }
+
+
+
+#game-container {
+    text-align: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+    margin-bottom: 20px;
+    position:relative;
+    width: 316px;
+    margin: auto;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #333;
+    font-size: 2rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+#resetButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: auto;
+}
+
+#resetButton:hover {
+    background-color: #45a049;
+}
+
+
+
+
+
+/* .winning-line {
+    position: absolute;
+    width: 5px;
+    height: 765px;
+    background-color: red;
+    z-index: 10;
+}
+
+.horizontal {
+
+    left: 46%;
+    top: -72%;
+    position: absolute;
+    transform: rotate(90deg);
+}
+
+.vertical {
+   
+    left: 50%;
+    top: -161px;
+    position: absolute;
+}
+
+.diagonal-left {
+   
+    transform: rotate(-45deg);
+    left: 68.3%;
+    top: -161px;
+    position: absolute;
+}
+
+.diagonal-right {
+   
+    transform: rotate(45deg);
+    left: 26.3%;
+    top: -157px;
+} */
