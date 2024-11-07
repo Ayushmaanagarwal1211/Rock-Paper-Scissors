@@ -20,7 +20,7 @@
         </div>
         <button onclick="handleClick()">Submit</button>
       </div>
-      <div style=" flex-direction: column;display: flex;width: 560px;display: flex;justify-content: center;align-items: center;"><h1>VS</h1>        <div class="score" id="score"><h1>Your Score : 0</h1>
+      <div class="text" style=" flex-direction: column;display: flex;width: 560px;display: flex;justify-content: center;align-items: center;"><h1>VS</h1>        <div class="score" id="score"><h1>Your Score : 0</h1>
         <h1>Computer Score : 0</h1>  </div>
 </div>
       <div class="user">
@@ -45,7 +45,7 @@
         <audio  style="display: none;" id="tone" src="ringtone.mp3"  ></audio>
         <button class="stop-time" id="stop-time" onclick="stopTime()">Stop Alarm</button>
     </div>
-    <div class="quiz-container" style="width: 100vw;">
+    <div class="quiz-container" >
         <div id="quiz" style="margin: auto;width: 400px;">
             <div id="question-container">
                 <span id="question-text"></span>
@@ -68,6 +68,23 @@
             <button onclick="restartQuiz()">Restart Quiz</button>
         </div>
     </div>
+
+
+    <div id="game-container">
+      <h1>Tic Tac Toe</h1>
+      <div id="board" class="board">
+          <div class="cell" data-cell-index="0"></div>
+          <div class="cell" data-cell-index="1"></div>
+          <div class="cell" data-cell-index="2"></div>
+          <div class="cell" data-cell-index="3"></div>
+          <div class="cell" data-cell-index="4"></div>
+          <div class="cell" data-cell-index="5"></div>
+          <div class="cell" data-cell-index="6"></div>
+          <div class="cell" data-cell-index="7"></div>
+          <div class="cell" data-cell-index="8"></div>
+      </div>
+      <button id="resetButton">Restart Game</button>
+  </div>
 
     <script src="script.js"></script>
   </body>
