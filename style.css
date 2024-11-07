@@ -10,6 +10,10 @@
 .quiz-container{
     margin: auto;
 }
+.quiz{
+    width: 60vw !important;
+    max-width: 400px !important;
+}
 @media only screen and (max-width:700px){
     .container{
         flex-direction: column;
@@ -32,7 +36,7 @@
        
     }
     #quiz{
-        width: 240px !important;
+        width: 180px !important;
         margin: auto !important;
     }
     .quiz-container{
@@ -120,7 +124,8 @@ button{
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 100vw;
+    max-width: 400px;
     padding: 30px;
     text-align: center;
 }
