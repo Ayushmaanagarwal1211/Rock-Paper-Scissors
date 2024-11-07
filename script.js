@@ -369,3 +369,125 @@ function restartQuiz() {
     loadQuestion();
 }
 
+
+
+
+
+
+// script.js
+const cells = document.querySelectorAll('.cell');
+const resetButton = document.getElementById('resetButton');
+const board = document.getElementById('board');
+
+let currentPlayer = 'X';  // 'X' is the human player
+let gameBoard = Array(9).fill(null);  // Array to track the game state
+let isGameOver = false;
+const winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+];
+
+// Add event listeners to each cell
+cells.forEach(cell => {
+    cell.addEventListener('click', handleCellClick);
+});
+
+// Handle player move
+function handleCellClick(event) {
+    const index = event.target.getAttribute('data-cell-index');
+    
+    if (gameBoard[index] !== null || isGameOver) return;  // Ignore if the cell is already taken or the game is over
+    
+    gameBoard[index] = currentPlayer;
+    event.target.textContent = currentPlayer;
+
+    if (checkWinner()) {
+        displayWinningLine();
+        setTimeout(() => {
+            alert(`${currentPlayer} wins!`);
+            resetGame();
+        }, 500);
+    } else if (gameBoard.every(cell => cell !== null)) {
+        setTimeout(() => {
+            alert('It\'s a draw!');
+            resetGame();
+        }, 500);
+    } else {
+        currentPlayer = 'O';  // Switch to computer's turn
+        computerMove();
+    }
+}
+
+// Computer makes its move
+function computerMove() {
+    const availableCells = gameBoard
+        .map((value, index) => value === null ? index : null)
+        .filter(value => value !== null);
+    
+    const randomIndex = availableCells[Math.floor(Math.random() * availableCells.length)];
+    gameBoard[randomIndex] = 'O';
+    cells[randomIndex].textContent = 'O';
+
+    if (checkWinner()) {
+        displayWinningLine();
+        setTimeout(() => {
+            alert('Computer wins!');
+            resetGame();
+        }, 500);
+    } else if (gameBoard.every(cell => cell !== null)) {
+        setTimeout(() => {
+            alert('It\'s a draw!');
+            resetGame();
+        }, 500);
+    } else {
+        currentPlayer = 'X';  
+    }
+}
+
+function checkWinner() {
+    return winningCombinations.some(combination => {
+        const [a, b, c] = combination;
+        return gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c];
+    });
+}
+
+function displayWinningLine() {
+    const winningCombination = winningCombinations.find(combination => {
+        const [a, b, c] = combination;
+        return gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c];
+    });
+
+    if (winningCombination) {
+        const [a, b, c] = winningCombination;
+        const line = document.createElement('div');
+        line.classList.add('winning-line');
+        
+        // Calculate position of winning line
+        if (a === 0 && b === 1 && c === 2 || a === 3 && b === 4 && c === 5 || a === 6 && b === 7 && c === 8) {
+            line.classList.add('horizontal');
+        } else if (a === 0 && b === 3 && c === 6 || a === 1 && b === 4 && c === 7 || a === 2 && b === 5 && c === 8) {
+            line.classList.add('vertical');
+        } else if (a === 0 && b === 4 && c === 8 || a === 2 && b === 4 && c === 6) {
+            line.classList.add(a === 0 ? 'diagonal-left' : 'diagonal-right');
+        }
+        
+        board.appendChild(line);
+    }
+}
+
+resetButton.addEventListener('click', resetGame);
+
+function resetGame() {
+    gameBoard = Array(9).fill(null);
+    currentPlayer = 'X';  // Player starts first
+    isGameOver = false;
+    // cells.forEach(cell => cell.textContent = '');
+    const line = document.querySelector('.winning-line');
+    // if (line) line.remove();
+}
